@@ -1,0 +1,86 @@
+﻿@model List<Product>
+@{
+    ViewBag.Title = "Kategoriler";
+}
+
+<h2>Yeni Ürün Ekleme Sayfasına Hoş Geldiniz...</h2>
+
+<!-- Page Heading -->
+<p class="mb-4">Admin olarak bu sayfada ürünleri görüntüleyebilir ve gerekli sil&düzenleme işlemleri yapabilirsiniz.</p>
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Ürünler</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Ürün Adı</th>
+                        <th>Birim Fiyat</th>
+                        <th>Kategori Adı</th>
+                        <th>Açıklama</th>
+                        <th>İşlemler</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>#</th>
+                        <th>Kategori Adı</th>
+                        <th>Birim Fiyat</th>
+                        <th>Kategori Adı</th>
+                        <th>Açıklama</th>
+                        <th>İşlemler</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td>@item.ProductName</td>
+                            <td>@item.UnitPrice</td>
+                            <td>@item.CategoryId</td>
+                            <td>@item.Content</td>
+                            <td class="text-lg-center">
+                                <a href="#" class="btn btn-outline-danger" data-product-delete="@item.Id">Sil</a>
+                                <a href="@Url.Action("UpdateProduct","Products",new {id=item.Id})" class="btn btn-outline-success">Düzenle</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<form id="deleteForm" action="@Url.Action("ProductDelete","Products")" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="id" id="deleteFormId" />
+</form>
+
+@section  scripts{
+    <script>
+        $(function () {
+
+            $("[data-product-delete]").click(function (e) {
+                e.preventDefault();
+                var id = $(this).data("product-delete");
+                if (confirm("Mevcut ürünü silmek istediğinize emin misiniz?")) {
+                    $("#deleteFormId").val(id);
+                    $("#deleteForm").submit();
+                };
+            });
+
+            $("#dataTable").DataTable({
+                language: {
+                    url: "@Url.Content("~/Areas/Admin/vendor/datatables/Turkish.json")"
+                }
+            });
+        });
+    </script>
+}
+

@@ -1,0 +1,139 @@
+﻿@model PaymentViewModel
+@{
+    ViewBag.Title = "Payments";
+}
+
+<h2 class="bg-success" style="margin-top:15px; margin-bottom:25px; text-align:center; padding:5px;">Ödeme Alanına Hoş Geldiniz</h2>
+
+@Html.ValidationMessageFor(x => x.MakePayment, null, new { @class = "alert alert-warning" })
+
+
+<div class="row">
+    <div class="col-md-4 order-md-2 mb-4">
+        <h4 class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-muted">Sepetiniz</span>
+            <span class="badge badge-secondary badge-pill">@Html.BasketPiece()</span>
+        </h4>
+        <ul class="list-group mb-3">
+            @foreach (var item in Html.Basket())
+            {
+                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                    <div>
+                        <h6 class="my-0">@item.ProductName</h6>
+                        <small class="text-muted">@item.Piece</small>
+                    </div>
+                    <span class="text-muted">@item.FeeText()₺)</span>
+                </li>
+            }
+
+            <li class="list-group-item d-flex justify-content-between">
+                <span>Toplam Tutar (TL)</span>
+                <strong>@string.Format("{0:0.00}₺", Html.BasketFee())</strong>
+            </li>
+        </ul>
+
+    </div>
+    <div class="col-md-8 order-md-1  mb-4">
+        <h4 class="mb-3 text-center bg-primary" style="padding:5px;">Fatura Bilgileri</h4>
+        <form action="@Url.Action("PaymentEnd","Basket")" method="post" class="needs-validation" novalidate>
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    @Html.LabelFor(x => x.CustomerName)
+                    @Html.TextBoxFor(x => x.CustomerName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.CustomerName, null, new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6 mb-3">
+                    @Html.LabelFor(x => x.CustomerLastName)
+                    @Html.TextBoxFor(x => x.CustomerLastName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.CustomerLastName, null, new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="mb-3">
+                @Html.LabelFor(x => x.CustomerEmail)
+                @Html.TextBoxFor(x => x.CustomerEmail, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.CustomerEmail, null, new { @class = "text-danger" })
+            </div>
+
+            <div class="mb-3">
+                @Html.LabelFor(x => x.CustomerAddress)
+                @Html.TextBoxFor(x => x.CustomerAddress, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.CustomerAddress, null, new { @class = "text-danger" })
+            </div>
+
+            <div class="mb-3">
+                @Html.LabelFor(x => x.CustomerAddress2)
+                @Html.TextBoxFor(x => x.CustomerAddress2, new { @class = "form-control" })
+            </div>
+
+            <div class="row">
+                <div class="col-md-5 mb-3">
+                    @Html.LabelFor(x => x.CustomerCityId)
+                    @Html.DropDownListFor(x => x.CustomerCityId, null, "Seçiniz...", new { @class = "custom-select d-block w-100" })
+                    @Html.ValidationMessageFor(x => x.CustomerCityId, null, new { @class = "text-danger" })
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    @Html.LabelFor(x => x.CustomerZip)
+                    @Html.TextBoxFor(x => x.CustomerZip, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.CustomerZip, null, new { @class = "invalid-feedback" })
+                </div>
+            </div>
+            <div class="bg-warning">
+                <hr class="mb-4">
+                <h4 class="mb-3 ml-4 mr-4">Ödeme Bilgileri</h4>
+
+                <div class="d-block my-3 ml-4 mr-4">
+                    <div class="custom-control custom-radio">
+                        <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked required>
+                        <label class="custom-control-label" for="credit">Kredi Kartı</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required>
+                        <label class="custom-control-label" for="debit">Kapıda Ödeme</label>
+                    </div>
+
+                </div>
+                <div class="row ml-4 mr-4">
+                    <div class="col-md-6 mb-3">
+                        @Html.LabelFor(x => x.CustomerCC)
+                        @Html.TextBoxFor(x => x.CustomerCC, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.CustomerCC, null, new { @class = "text-danger" })
+                        <br />
+                        <small class="text-muted">Kart sahibi kartın üzerinde yazan isim olmalıdır.</small>
+
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        @Html.LabelFor(x => x.CustomerCCNo)
+                        @Html.TextBoxFor(x => x.CustomerCCNo, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.CustomerCCNo, null, new { @class = "text-danger" })
+                        <br />
+                        <small class="text-muted">Kartın üzerindeki 16 haneli numaradır.</small>
+                    </div>
+                </div>
+                <div class="row ml-4 mr-4">
+                    <div class="col-md-6 mb-3">
+                        @Html.LabelFor(x => x.CustomerPullDate)
+                        @Html.TextBoxFor(x => x.CustomerPullDate, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.CustomerPullDate, null, new { @class = "text-danger" })
+
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        @Html.LabelFor(x => x.CustomerCVV)
+                        @Html.TextBoxFor(x => x.CustomerCVV, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.CustomerCVV, null, new { @class = "text-danger" })
+                        <br />
+                        <small class="text-muted">Kartın arka yüzündeki üç haneli numaradır.</small>
+                    </div>
+                </div>
+                <input type="hidden" name="MakePayment" value="@Html.BasketFee()" />
+                <button class="btn btn-outline-success btn-lg btn-block" type="submit">Ödemeyi Tamamla</button>
+
+            </div>
+
+        </form>
+    </div>
+</div>
+

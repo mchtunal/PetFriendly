@@ -1,0 +1,148 @@
+/*!
+ * Start Bootstrap - Shop Homepage (https://startbootstrap.com/template-overviews/shop-homepage)
+ * Copyright 2013-2019 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-shop-homepage/blob/master/LICENSE)
+ */
+body {
+    padding-top: 56px;
+}
+
+.navbarFooterBetween {
+    min-height: 866px;
+}
+/*Search css*/
+.has-search .form-control {
+    padding-left: 2.375rem;
+}
+
+.has-search .form-control-feedback {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 2.375rem;
+    height: 2.375rem;
+    line-height: 2.375rem;
+    text-align: center;
+    pointer-events: none;
+    color: #aaa;
+}
+
+
+.quantity {
+    float: left;
+    margin-right: 15px;
+    background-color: #eee;
+    position: relative;
+    width: 80px;
+    overflow: hidden
+}
+
+    .quantity input {
+        margin: 0;
+        text-align: center;
+        width: 15px;
+        height: 15px;
+        padding: 0;
+        float: right;
+        color: #000;
+        font-size: 20px;
+        border: 0;
+        outline: 0;
+        background-color: #F6F6F6
+    }
+
+        .quantity input.qty {
+            position: relative;
+            border: 0;
+            width: 100%;
+            height: 40px;
+            padding: 10px 25px 10px 10px;
+            text-align: center;
+            font-weight: 400;
+            font-size: 15px;
+            border-radius: 0;
+            background-clip: padding-box
+        }
+
+    .quantity .minus, .quantity .plus {
+        line-height: 0;
+        background-clip: padding-box;
+        -webkit-border-radius: 0;
+        -moz-border-radius: 0;
+        border-radius: 0;
+        -webkit-background-size: 6px 30px;
+        -moz-background-size: 6px 30px;
+        color: #bbb;
+        font-size: 20px;
+        position: absolute;
+        height: 50%;
+        border: 0;
+        right: 0;
+        padding: 0;
+        width: 25px;
+        z-index: 3
+    }
+
+        .quantity .minus:hover, .quantity .plus:hover {
+            background-color: #dad8da
+        }
+
+    .quantity .minus {
+        bottom: 0
+    }
+
+.shopping-cart {
+    margin-top: 20px;
+}
+
+
+.ProductImageContainer {
+    position: relative;
+}
+
+.AddToBasket {
+    position: absolute;
+    bottom: .5rem;
+    right: .5rem;
+    border: 0px;
+}
+
+.field-validation-error {
+    display: block;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+button:focus {
+    outline: 0;
+}
+
+.navbar .dropdown-menu .form-control {
+    width: 200px;
+}
+
+@media screen and (max-width:992px) {
+    .navbar .dropdown-menu .form-control {
+        width: 100%;
+    }
+}
+
+
+div.row div.col-lg-3 div.list-group a {
+    background-color: red;
+    color:greenyellow;
+    text-align: center;
+    border: outset;
+    border-color: black;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px
+}
+
+div.row div.col-lg-3 div.list-group a:hover {
+    text-decoration:none;
+    background-color:yellow;
+    color:blue; 
+
+}

@@ -1,0 +1,11 @@
+﻿@model List<Category>
+
+<div class="list-group ">
+    @foreach (var item in Model)
+    {
+        // new { kategoriId=item.Id } bunu yazarak url de secilen kategorinin id sini route da göstermiş olduk.
+
+        <a href="@Url.Action("Index","Home",new { categoryId=item.Id })" class="list-group-item catcat"> @item.CategoryName</a>
+    }
+
+</div>

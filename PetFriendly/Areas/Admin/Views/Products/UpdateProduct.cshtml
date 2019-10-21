@@ -1,0 +1,66 @@
+﻿@model Product
+@{
+    ViewBag.Title = "Ürün Düzenleme Sayfası";
+}
+
+<h2>Ürün Düzenleme Sayfasına Hoşgeldin ~ADMİN~</h2>
+
+@using (Html.BeginForm("UpdateProduct", "Products", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.Id)
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.ProductName)
+        @Html.TextBoxFor(x => x.ProductName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.ProductName, null, new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.UnitPrice)
+        @Html.TextBoxFor(x => x.UnitPrice, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.UnitPrice, null, new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.CategoryId)
+        @Html.DropDownListFor(x => x.CategoryId, null, "Seçiniz", new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.CategoryId, null, new { @class = "text-danger" })
+    </div>
+
+
+    <div class="form-group w-50">
+        @Html.Label("photo", "Ürün Görseli")
+        <div>
+            @Html.HiddenFor(x => x.PicturePath)
+            @Html.ProductImg(Model.PicturePath, null, new { height = "100" ,id="productImg"})
+        </div>
+
+
+        <input type="file" name="photo" id="photo" class="form-control-file" , accept="image/*" />
+        @Html.ValidationMessage("photo", null, new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.Content)
+        @Html.TextAreaFor(x => x.Content, new { @class = "form-control ", rows = "4", cols = "80" })
+        @Html.ValidationMessageFor(x => x.Content, null, new { @class = "text-danger" })
+    </div>
+
+
+    <br />
+    <button class="btn btn-outline-primary">Kaydet</button>
+    @Html.ActionLink("İptal", "Index", "Products", new { @class = "btn btn-secondary" })
+}
+
+@section scripts{
+
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+    <script>
+        PicturePreview("#resim", "#productImg")
+    </script>
+
+
+}

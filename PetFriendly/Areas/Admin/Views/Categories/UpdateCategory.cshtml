@@ -1,0 +1,19 @@
+﻿@model Category
+@{
+    ViewBag.Title = "UpdateCategory";
+}
+
+<h2>Sevgili Admin bu sayfada kategorileri düzenleyebilirsin.</h2>
+
+@using (Html.BeginForm("UpdateCategory", "Categories", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.Id)
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.CategoryName)
+        @Html.TextBoxFor(x => x.CategoryName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.CategoryName, null, new { @class = "text-danger" })
+    </div>
+    <button class="btn btn-outline-primary">Kaydet</button>
+}
